@@ -1,5 +1,5 @@
 use cairo_lang_macro::{ProcMacroResult, TextSpan, Token, TokenStream, TokenTree};
-use std::fmt::{Display, Result};
+use std::fmt::Result;
 
 use crate::CairoWrite;
 

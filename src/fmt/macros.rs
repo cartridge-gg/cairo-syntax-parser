@@ -46,9 +46,8 @@ impl CairoWrite for MacroParamKind {
 
 impl CairoWrite for MacroRepetition {
     fn cwrite<W: std::fmt::Write>(&self, buf: &mut W) -> std::fmt::Result {
-        buf.write_str("$(")?;
-        self.elements.cwrite(buf)?;
-        buf.write_char(')')?;
+        buf.write_str("$")?;
+        self.elements.cwrite_concatenated_wrapped(buf, '(', ')')?;
         if self.comma {
             buf.write_char(',')?;
         }

@@ -1,7 +1,6 @@
 use crate::{
-    CairoFormat, Expr, ExprPath, Modifier, from_typed_syntax_node, syntax_enum, syntax_option,
-    syntax_type, terminal_to_string, typed_syntax_node_to_string_without_trivia,
-    vec_from_element_list,
+    Expr, ExprPath, Modifier, from_typed_syntax_node, syntax_enum, syntax_option, syntax_type,
+    terminal_to_string, typed_syntax_node_to_string_without_trivia, vec_from_element_list,
 };
 use delegate::delegate;
 use std::mem;

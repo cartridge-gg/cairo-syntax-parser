@@ -39,7 +39,7 @@ syntax_enum! {
 }
 
 syntax_type! {
-    InlineMacro[ExprInlineMacro]{
+    InlineMacroExpr[ExprInlineMacro]{
         path: ExprPath,
         arguments: String,
     }
@@ -191,13 +191,6 @@ syntax_type! {
         ret_ty: Option<Box<Expr>>,
         no_panic[optional_no_panic]: bool,
         expr: Box<Expr>,
-    }
-}
-
-syntax_type! {
-    InlineMacroExpr[ExprInlineMacro]{
-        path: ExprPath,
-        arguments: String,
     }
 }
 

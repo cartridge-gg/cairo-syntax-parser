@@ -1,4 +1,15 @@
 #[macro_export]
+macro_rules! syntax_display {
+    ($type_name:ident) => {
+        impl std::fmt::Display for $type_name {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                $crate::CairoWrite::cwrite(self, f)
+            }
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! terminal_to_string {
 
     {$($terminal:ident $(. $($methods:ident).+)?),* $(,)?} => {
@@ -112,6 +123,9 @@ macro_rules! syntax_type {
             }
         }
 
+        $crate::syntax_display!($struct_name);
+
+
         // Auto-implement traits based on field names
         $($crate::syntax_type!(@impl_trait_for_field $struct_name, $field, $field_type);)*
     };
@@ -218,6 +232,8 @@ macro_rules! syntax_terminal_enum {
                 $($variant),*
             }
 
+            $crate::syntax_display!($enum_name);
+
             impl<'db> $crate::FromAst<'db, cairo_lang_syntax::node::ast::$ast_enum<'db>> for $enum_name {
                 fn from_ast(ast: cairo_lang_syntax::node::ast::$ast_enum<'db>, _db: &'db dyn salsa::Database) -> Self {
                     From::from(ast)
@@ -293,11 +309,8 @@ macro_rules! syntax_enum {
                 }
             }
         }
-        impl std::fmt::Display for $enum_name {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                $crate::CairoWrite::cwrite(self, f)
-            }
-        }
+
+        $crate::syntax_display!($enum_name);
     };
 
     (@pat $ast_enum:ident $variant:ident [ $ast_variant:ident ] ( $ty:ty ) $e:ident) => {
