@@ -133,7 +133,7 @@ impl CairoWrite for TokenNode {
             TokenNode::AndAnd => buf.write_str("&&"),
             TokenNode::Arrow => buf.write_str("->"),
             TokenNode::At => buf.write_str("@"),
-            TokenNode::BadCharacters => buf.write_str(s),
+            TokenNode::BadCharacters(s) => buf.write_str(s),
             TokenNode::Colon => buf.write_char(':'),
             TokenNode::ColonColon => buf.write_str("::"),
             TokenNode::Comma => buf.write_char(','),

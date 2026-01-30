@@ -124,7 +124,7 @@ syntax_enum! {
         AndAnd[TerminalAndAnd],
         Arrow[TerminalArrow],
         At[TerminalAt],
-        BadCharacters[TerminalBadCharacters],
+        BadCharacters[TerminalBadCharacters](String),
         Colon[TerminalColon],
         ColonColon[TerminalColonColon],
         Comma[TerminalComma],
