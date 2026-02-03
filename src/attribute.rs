@@ -72,10 +72,16 @@ impl Attribute {
         vec![]
     }
 
-    pub fn is_single_unnamed_arg(self) -> bool {
+    // pub fn is_single_unnamed_arg(self) -> bool {
+    //     match &self.arguments {
+    //         Some(args) if args.len() == 1 => args[0].as_unnamed().is_some(),
+    //         _ => false,
+    //     }
+    // }
+    pub fn get_single_unnamed_arg(&self) -> Option<&Expr> {
         match &self.arguments {
-            Some(args) if args.len() == 1 => args[0].as_unnamed().is_some(),
-            _ => false,
+            Some(args) if args.len() == 1 => args[0].as_unnamed(),
+            _ => None,
         }
     }
 }

@@ -14,7 +14,7 @@ pub trait NameTrait {
 
 pub trait VisibilityTrait {
     fn visibility(&self) -> &Visibility;
-    fn visibility_mut(&mut self) -> &mut Visibility;
+    fn set_visibility(&mut self, new_visibility: Visibility);
 }
 
 syntax_type! {

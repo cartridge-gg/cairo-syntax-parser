@@ -181,8 +181,8 @@ macro_rules! syntax_type {
                 &self.visibility
             }
 
-            fn visibility_mut(&mut self) -> &mut $crate::Visibility {
-                &mut self.visibility
+            fn set_visibility(&mut self, new_visibility: $crate::Visibility) {
+                self.visibility = new_visibility;
             }
         }
     };
@@ -196,6 +196,16 @@ macro_rules! syntax_type {
 
             fn attributes_mut(&mut self) -> &mut Vec<$crate::Attribute> {
                 &mut self.attributes
+            }
+        }
+    };
+
+
+    // Check if field is "generic_params" and implement GenericParamsTrait
+    (@impl_trait_for_field $struct_name:ident, generic_params, $field_type:ty) => {
+        impl $crate::GenericParamsTrait for $struct_name {
+            fn generic_params(&self) -> &Option<Vec<$crate::GenericParam>> {
+                &self.generic_params
             }
         }
     };

@@ -5,7 +5,7 @@ use crate::{
 };
 use cairo_lang_macro::TokenStream;
 use cairo_lang_parser::utils::SimpleParserDatabase;
-use cairo_lang_syntax::node::ast::SyntaxFile;
+use cairo_lang_syntax::node::ast::{ModuleItem, SyntaxFile};
 
 syntax_enum! {
     Item[ModuleItem]{
@@ -261,4 +261,34 @@ pub fn items_from_token_stream(token_stream: TokenStream) -> Vec<Item> {
     let db = SimpleParserDatabase::default();
     let (node, _diagnostics) = db.parse_virtual_with_diagnostics(token_stream);
     FromAst::<SyntaxFile>::from_syntax_node(&db, node)
+}
+
+pub fn item_from_token_stream(token_stream: TokenStream) -> Item {
+    let db = SimpleParserDatabase::default();
+    let (node, _diagnostics) = db.parse_virtual_with_diagnostics(token_stream);
+    let item_node = node.get_children(&db)[0].get_children(&db)[0];
+    FromAst::<ModuleItem>::from_syntax_node(&db, item_node)
+}
+
+impl Item {
+    pub fn kind(&self) -> &str {
+        match self {
+            Item::Constant(_) => "Constant",
+            Item::Module(_) => "Module",
+            Item::Use(_) => "UseItem",
+            Item::FreeFunction(_) => "FunctionWithBody",
+            Item::ExternFunction(_) => "ExternFunction",
+            Item::ExternType(_) => "ExternType",
+            Item::Trait(_) => "Trait",
+            Item::Impl(_) => "Impl",
+            Item::ImplAlias(_) => "ImplAlias",
+            Item::Struct(_) => "Struct",
+            Item::Enum(_) => "Enum",
+            Item::TypeAlias(_) => "TypeAlias",
+            Item::InlineMacro(_) => "InlineMacroItem",
+            Item::MacroDeclaration => "MacroDeclaration",
+            Item::HeaderDoc(_) => "HeaderDoc",
+            Item::Missing => "Missing",
+        }
+    }
 }

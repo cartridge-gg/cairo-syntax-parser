@@ -1,5 +1,5 @@
 use crate::utils::str_to_token_stream;
-use crate::{CairoFormat, Item, items_from_token_stream};
+use crate::{CairoFormat, items_from_token_stream};
 use cairo_lang_macro::{ProcMacroResult, TokenStream, attribute_macro};
 
 #[attribute_macro]

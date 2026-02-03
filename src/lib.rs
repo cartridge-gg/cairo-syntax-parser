@@ -15,6 +15,7 @@ pub use attribute::{Arg, ArgClause, Attribute, AttributesTrait, NamedArg};
 pub use common::{Identifier, Modifier, NameTrait, Param, Visibility, VisibilityTrait};
 pub use expr::{Expr, ExprPath, FixedSizeArray, PathSegment};
 pub use fmt::{CairoFormat, CairoWrite, CairoWriteSlice};
-pub use generic_param::GenericParam;
+pub use generic_param::{GenericParam, GenericParamsTrait};
 pub use item::{Enum, Item, Member, Struct, Variant, items_from_token_stream};
 pub use statement::{Condition, Pattern, Statement};
+pub use utils::str_to_token_stream;

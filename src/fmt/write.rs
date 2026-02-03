@@ -1,6 +1,8 @@
 use std::fmt::{Result, Write};
 use std::ops::Deref;
 
+use starknet_types_core::felt::Felt;
+
 pub trait Slice {
     type Element;
     fn elements(&self) -> &[Self::Element];
@@ -91,9 +93,41 @@ pub trait CairoWrite {
     }
 }
 
+impl CairoWrite for [u8; 32] {
+    fn cwrite<W: Write>(&self, buf: &mut W) -> Result {
+        buf.write_str("0x")?;
+        for byte in self.iter() {
+            write!(buf, "{:02x}", byte)?;
+        }
+        Ok(())
+    }
+}
+
+impl CairoWrite for [u8; 31] {
+    fn cwrite<W: Write>(&self, buf: &mut W) -> Result {
+        buf.write_str("0x00")?;
+        for byte in self.iter() {
+            write!(buf, "{:02x}", byte)?;
+        }
+        Ok(())
+    }
+}
+
 impl CairoWrite for String {
     fn cwrite<W: Write>(&self, buf: &mut W) -> Result {
         buf.write_str(self)
+    }
+}
+
+impl CairoWrite for &str {
+    fn cwrite<W: Write>(&self, buf: &mut W) -> Result {
+        buf.write_str(self)
+    }
+}
+
+impl CairoWrite for Felt {
+    fn cwrite<W: Write>(&self, buf: &mut W) -> Result {
+        self.to_fixed_hex_string().cwrite(buf)
     }
 }
 
@@ -188,6 +222,11 @@ where
         buf.write_char(prefix)?;
         self.cwrite_csv(buf)?;
         buf.write_char(suffix)
+    }
+    fn cwrite_csv_wrapped_str<W: Write>(&self, buf: &mut W, prefix: &str, suffix: &str) -> Result {
+        buf.write_str(prefix)?;
+        self.cwrite_csv(buf)?;
+        buf.write_str(suffix)
     }
     fn cwrite_csv_braced<W: Write>(&self, buf: &mut W) -> Result {
         self.cwrite_csv_wrapped(buf, '{', '}')
