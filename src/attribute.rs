@@ -84,6 +84,9 @@ impl Attribute {
             _ => None,
         }
     }
+    pub fn get_single_unmamed_arg_string(&self) -> Option<String> {
+        self.get_single_unnamed_arg().map(|expr| expr.to_string())
+    }
 }
 
 pub trait AttributesTrait {
