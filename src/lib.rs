@@ -18,4 +18,4 @@ pub use fmt::{CairoFormat, CairoWrite, CairoWriteSlice};
 pub use generic_param::{GenericParam, GenericParamsTrait};
 pub use item::{Enum, Item, Member, Struct, Variant, items_from_token_stream};
 pub use statement::{Condition, Pattern, Statement};
-pub use utils::str_to_token_stream;
+pub use utils::{Slice, str_to_token_stream};
